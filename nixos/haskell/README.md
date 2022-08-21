@@ -11,7 +11,7 @@ $ docker build --tag mingyuchoo/nixos:haskell-0.1 --file Dockerfile . --output t
 ## How to run
 
 ```sh
-$ docker run --interactive --tty --rm --name nixos-haskell nixos:haskell-0.1 bash
+$ docker run --interactive --tty --rm --name nixos-haskell mingyuchoo/nixos:haskell-0.1 bash
 ```
 
 ## How to push the image to Docker Hub

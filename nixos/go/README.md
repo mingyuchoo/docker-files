@@ -11,7 +11,7 @@ $ docker build --tag mingyuchoo/nixos:go-0.1 --file Dockerfile . --output type=t
 ## How to run
 
 ```sh
-$ docker run --interactive --tty --rm --name nixos-go nixos:go-0.1 bash
+$ docker run --interactive --tty --rm --name nixos-go mingyuchoo/nixos:go-0.1 bash
 ```
 
 ## How to push the image to Docker Hub

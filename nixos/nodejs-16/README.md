@@ -11,7 +11,7 @@ $ docker build --tag mingyuchoo/nixos:node16-0.1 --file Dockerfile . --output ty
 ## How to run
 
 ```sh
-$ docker run --interactive --tty --rm --name nixos-node16 nixos:node16-0.1 bash
+$ docker run --interactive --tty --rm --name nixos-node16 mingyuchoo/nixos:node16-0.1 bash
 ```
 
 ## How to push the image to Docker Hub

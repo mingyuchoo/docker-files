@@ -11,7 +11,7 @@ $ docker build --tag mingyuchoo/nixos:jdk11-0.1 --file Dockerfile . --output typ
 ## How to run
 
 ```sh
-$ docker run --interactive --tty --rm --name nixos-jdk11 nixos:jdk11-0.1 bash
+$ docker run --interactive --tty --rm --name nixos-jdk11 mingyuchoo/nixos:jdk11-0.1 bash
 ```
 
 ## How to push the image to Docker Hub

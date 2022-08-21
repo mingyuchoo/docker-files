@@ -11,7 +11,7 @@ $ docker build --tag mingyuchoo/nixos:ocaml-0.1 --file Dockerfile . --output typ
 ## How to run
 
 ```sh
-$ docker run --interactive --tty --rm --name nixos-ocaml nixos:ocaml-0.1 bash
+$ docker run --interactive --tty --rm --name nixos-ocaml mingyuchoo/nixos:ocaml-0.1 bash
 ```
 
 ## How to push the image to Docker Hub
