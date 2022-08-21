@@ -10,4 +10,3 @@
 - jdk17
 - nodejs-16
 - ocaml
-
