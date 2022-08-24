@@ -13,24 +13,16 @@ RUN stack --version
 
 
 # Install GHC
-RUN mkdir /project
-WORKDIR /project
-#COPY . /project
-#RUN stack setup
-#RUN stack exec -- ghc --version
+RUN mkdir /app
+WORKDIR /app
 
-#RUN stack build
-# Install dependencies.
-#COPY package.yaml /project
-#RUN stack build --only-dependencies
-
-# Build project
-COPY . /project
+# Build app
+COPY . /app
 RUN stack setup
 RUN stack exec -- ghc --version
 RUN stack build --copy-bins --local-bin-path /usr/local/bin
 
-# Run project
+# Run app
 ENV HOST 0.0.0.0
 ENV PORT 3000
 EXPOSE 3000
