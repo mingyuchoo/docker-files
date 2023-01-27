@@ -2,7 +2,7 @@
 
 ## How to build
 
-```sh
+```bash
 $ docker build --tag mingyuchoo/nixos:deno-0.1 --file Dockerfile .
 # or
 $ docker build --tag mingyuchoo/nixos:deno-0.1 --file Dockerfile . --output type=tar,dest=nixos-deno-0.1.tar .
@@ -10,12 +10,12 @@ $ docker build --tag mingyuchoo/nixos:deno-0.1 --file Dockerfile . --output type
 
 ## How to run
 
-```sh
+```bash
 docker run --interactive --tty --rm --name nixos-deno mingyuchoo/nixos:deno-0.1 bash
 ```
 
 ## How to push the image to Docker Hub
 
-```sh
+```bash
 docker push mingyuchoo/nixos:deno-0.1
 ```

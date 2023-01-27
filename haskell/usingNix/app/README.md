@@ -2,7 +2,7 @@
 
 ## Build Haskell app
 
-```sh
+```bash
 stack build
 stack exec app-exe
 nix-build default.nix
@@ -10,7 +10,7 @@ nix-build default.nix
 
 ## Build Docker image
 
-```sh
+```bash
 cd docker
 nix-build default.nix
 docker load -i result
@@ -18,13 +18,13 @@ docker load -i result
 
 ## Run Docker
 
-```sh
+```bash
 docker run -p 8000:8000 app:<HASH>
 ```
 
 ### How to check health
 
-```sh
+```bash
 $ curl -X POST \
     -H "Content-Type: text/plain;charset=utf-8" \
     -H "Accept: application/json;charset=utf-8" \
