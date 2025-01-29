@@ -32,15 +32,15 @@ docker build . --tag mingyuchoo/haskell/warp-web-app:latest
 ### How to run Docker Container
 
 ```
-docker run -p 3000:3000 mingyuchoo/haskell/warp-web-app:latest
+docker run -p 4000:4000 mingyuchoo/haskell/warp-web-app:latest
 # or
-docker run -d -p 3000:3000 mingyuchoo/haskell/warp-web-app:latest
+docker run -d -p 4000:4000 mingyuchoo/haskell/warp-web-app:latest
 ```
 
 ### How to test in web browser
 
 ```
-http://localhost:3000
+http://localhost:4000
 ```
 
 ## References

@@ -27,7 +27,7 @@ someFunc = do
   run port app3
   where
     port :: Int
-    port = 3000
+    port = 4000
 
 
 -- |
