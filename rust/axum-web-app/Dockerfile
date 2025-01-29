@@ -1,38 +1,58 @@
-#######################################
-# Build Stage
-#######################################
-FROM --platform=linux/x86_64 rust:latest as builder
+# Use a specific Rust version and Alpine base image
+FROM rust:1.84.0-alpine AS chef
 
-WORKDIR /app
+# Set the working directory
+WORKDIR /usr/src/axum-web-app
 
-COPY Cargo.toml Cargo.lock ./
+# Install dependencies and tools
+RUN set -eux; \
+    apk add --no-cache musl-dev openssl-dev; \
+    rustup target add x86_64-unknown-linux-musl; \
+    cargo install cargo-chef --locked; \
+    rm -rf $CARGO_HOME/registry
 
-COPY src ./src
+# Prepare the build plan
+FROM chef AS planner
 
-RUN rustup target add x86_64-unknown-linux-musl
+COPY . .
+RUN cargo chef prepare --recipe-path recipe.json
 
+# Build the application
+FROM chef AS builder
+
+COPY --from=planner /usr/src/axum-web-app/recipe.json ./
+RUN cargo chef cook --release --target x86_64-unknown-linux-musl --recipe-path recipe.json
+
+COPY . .
 RUN cargo build --release --target x86_64-unknown-linux-musl
 
+# Final stage: Create a minimal image with the built application
+FROM alpine:latest
 
-#######################################
-# Run Stage
-#######################################
-FROM --platform=linux/x86_64 alpine:latest
+# Create a user for security
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
-WORKDIR /app
+# Set the working directory
+WORKDIR /usr/local/bin
 
-ENV APP_PORT=3000
+# Copy the built binary from the builder stage
+COPY --from=builder /usr/src/axum-web-app/target/x86_64-unknown-linux-musl/release/axum-web-app ./
 
-RUN apk update && apk add ca-certificates tzdata
+# Ensure the binary is executable
+RUN chmod +x axum-web-app && chown appuser:appgroup axum-web-app
 
-COPY --from=builder target/x86_64-unknown-linux-musl/release/axum-web-app /app/axum-web-app
-
-RUN chmod +x /app/axum-web-app
-
+# Set environment variables
+ENV APP_PORT=4000
 ENV TZ=Asia/Seoul
+
+# Set the timezone
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-CMD ["/app/axum-web-app"]
+# Switch to the user
+USER appuser
 
-EXPOSE 3000
+# Expose the application port
+EXPOSE $APP_PORT
 
+# Run the application
+CMD ["./axum-web-app"]

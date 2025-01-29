@@ -34,7 +34,7 @@ docker build . --tag mingyuchoo/haskell/warp-web-app:latest
 ```
 docker run -p 3000:3000 mingyuchoo/haskell/warp-web-app:latest
 # or
-docker run -p 3000:3000 -it mingyuchoo/haskell/warp-web-app:latest /bin/bash
+docker run -d -p 3000:3000 mingyuchoo/haskell/warp-web-app:latest
 ```
 
 ### How to test in web browser

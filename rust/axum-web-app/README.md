@@ -30,5 +30,5 @@ docker build . --tag mingyuchoo/rust/axum-web-app:latest
 ```
 docker run -p 8080:8080 mingyuchoo/rust/axum-web-app:latest
 # or
-docker run -p 8080:8080 -it mingyuchoo/rust/axum-web-app:latest /bin/bash
+docker run -d -p 8080:8080 mingyuchoo/rust/axum-web-app:latest
 ```
