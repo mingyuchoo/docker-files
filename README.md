@@ -6,9 +6,11 @@
 
 # docker-files
 
-Dockerfiles using various OS
+Dockerfiles using various programming languages.
 
 ## List
 
+- Haskell
 - NixOS
+- Rust
 
