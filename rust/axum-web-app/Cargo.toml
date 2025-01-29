@@ -7,3 +7,7 @@
   axum  = "0.7.5"
   clap  = {version = "4.5.20", features = ["derive"]}
   tokio = {version = "1.41.1", features = ["full"]}
+
+[[bin]]
+name = "axum-web-app"
+path = "src/main.rs"
