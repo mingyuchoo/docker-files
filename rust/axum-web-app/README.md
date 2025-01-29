@@ -17,3 +17,18 @@ cargo test
 cargo build --release
 ./target/release/{project-name}
 ```
+## Build Docker
+
+### How to build Docker image
+
+```
+docker build . --tag mingyuchoo/rust/axum-web-app:latest
+```
+
+### How to run Docker Container
+
+```
+docker run -p 8080:8080 mingyuchoo/rust/axum-web-app:latest
+# or
+docker run -p 8080:8080 -it mingyuchoo/rust/axum-web-app:latest /bin/bash
+```
