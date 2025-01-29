@@ -1,0 +1,6 @@
+(executable
+ (public_name dream_web_app)
+ (name main)
+ (libraries dream_web_app dream)
+ (preprocess
+  (pps lwt_ppx)))
