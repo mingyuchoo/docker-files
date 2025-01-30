@@ -2,7 +2,7 @@
 FROM ocaml/opam:ubuntu-24.10-ocaml-5.3 AS builder
 
 # Set the working directory
-WORKDIR /usr/src/dream_web_app
+WORKDIR $HOME/dream_web_app
 
 # Install necessary system packages
 RUN sudo apt-get update && \
@@ -11,32 +11,37 @@ RUN sudo apt-get update && \
 # Copy the application source code to the container
 COPY . .
 
+RUN sudo chown -R opam:opam $HOME/dream_web_app
+
 # Install dependencies and build the application
-RUN opam update
-RUN opam install -y ocaml dune dream
+USER opam
+
+# Install dependencies and build the application
+#RUN opam update
+RUN opam install -y dune dream
+
+RUN eval $(opam env)
+
 RUN opam install --deps-only --yes .
-RUN $HOME/.opam/default/bin/dune build --release
+RUN opam exec -- dune build --release
 
 # Second stage: Run stage
 FROM ubuntu:24.10
 
-# Create a non-root user and group
-RUN groupadd -r appuser && useradd -r -g appuser appuser
-
 # Set the working directory for the final stage
-WORKDIR /usr/local/bin
+WORKDIR $HOME/bin
+
+# Install dependencies and build the application
+USER opam
 
 # Copy the built application from the builder stage
-COPY --from=builder /usr/src/dream_web_app/_build/default/bin/dream_web_app .
+COPY --from=builder $HOME/dream_web_app/_build/default/bin/main.exe .
 
 # Set the ownership to the non-root user
-RUN chown appuser:appuser /usr/local/bin/dream_web_app
-
-# Switch to the non-root user
-USER appuser
+RUN sudo chown -R opam:opam $HOME/bin
 
 # Expose the necessary port (replace <port> with the actual port number)
 EXPOSE 8080
 
 # Command to run the application
-CMD ["./dream_web_app"]
+CMD ["./main.exe"]
