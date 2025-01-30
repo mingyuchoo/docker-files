@@ -28,7 +28,7 @@ library
     hs-source-dirs:   lib
     default-language: Haskell2010
 
-executable warp-web-app.exe
+executable warp-web-app
     import:           warnings
     main-is:          Main.hs
     build-depends:
@@ -43,7 +43,7 @@ executable warp-web-app.exe
     hs-source-dirs:   exe
     default-language: Haskell2010
 
-test-suite warp-web-app.test
+test-suite warp-web-app-test
     import:           warnings
     default-language: Haskell2010
     type:             exitcode-stdio-1.0

@@ -11,7 +11,7 @@ cargo add axum
 
 # edit ./src/main.rs
 
-cargo run -- --port 8080
+cargo run -- --port 4000
 cargo check
 cargo test
 cargo build --release
@@ -28,7 +28,7 @@ docker build . --tag mingyuchoo/rust/axum-web-app:latest
 ### How to run Docker Container
 
 ```
-docker run -p 8080:8080 mingyuchoo/rust/axum-web-app:latest
+docker run -p 4000:4000 mingyuchoo/rust/axum-web-app:latest
 # or
-docker run -d -p 8080:8080 mingyuchoo/rust/axum-web-app:latest
+docker run -d -p 4000:4000 mingyuchoo/rust/axum-web-app:latest
 ```

@@ -30,14 +30,14 @@ RUN echo $TZ > /etc/timezone
 WORKDIR /usr/local/bin
 
 # Copy executable and necessary files
-COPY --from=builder /usr/src/warp-web-app/install/warp-web-app.exe ./warp-web-app.exe
+COPY --from=builder /usr/src/warp-web-app/install/warp-web-app ./warp-web-app
 COPY --from=builder /usr/src/warp-web-app/index.html ./index.html
 
 # Create a user to run the application
 RUN groupadd -r appuser && useradd -r -g appuser appuser
 
 # Ensure the binary is executable
-RUN chmod +x warp-web-app.exe && chown appuser:appuser warp-web-app.exe
+RUN chmod +x warp-web-app && chown appuser:appuser warp-web-app
 
 # Switch to the user
 USER appuser
@@ -46,4 +46,4 @@ USER appuser
 EXPOSE $APP_PORT
 
 # Run the application
-CMD ["./warp-web-app.exe"]
+CMD ["./warp-web-app"]
