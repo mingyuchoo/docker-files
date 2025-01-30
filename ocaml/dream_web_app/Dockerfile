@@ -8,7 +8,9 @@ WORKDIR $HOME/dream_web_app
 
 # Install necessary system packages
 RUN sudo apt-get update && \
-    sudo apt-get install -y pkg-config libgmp-dev libev-dev libssl-dev
+    sudo apt-get install -y pkg-config libgmp-dev libev-dev libssl-dev && \
+    sudo apt-get clean && \
+    sudo rm -rf /var/lib/apt/lists/*
 
 # Copy the application source code to the container
 COPY . .
