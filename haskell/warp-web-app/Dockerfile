@@ -8,26 +8,28 @@ WORKDIR /usr/src/warp-web-app
 
 # Install dependencies
 COPY warp-web-app.cabal .
-RUN cabal update
-RUN cabal build --only-dependencies
+RUN cabal update && \
+    cabal build --only-dependencies
 
 # Copy and build source code
 COPY . .
 RUN cabal install --installdir=/usr/src/warp-web-app/install
 
 # Stage 2: Create the minimal image
-FROM haskell:9.8.4-slim
+#FROM haskell:9.8.4-slim
+FROM debian:bookworm-slim
+
 # Set environment variables
 ENV APP_PORT=4000
 ENV TZ=Asia/Seoul
 
 # Set the timezone
-COPY --from=builder /usr/share/zoneinfo/$TZ /etc/localtime
-COPY --from=builder /usr/share/zoneinfo /usr/share/zoneinfo
-RUN echo $TZ > /etc/timezone
+RUN apt-get update && apt-get install -y tzdata && \
+    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Set the working directory
-WORKDIR /usr/local/bin
+WORKDIR /app
 
 # Copy executable and necessary files
 COPY --from=builder /usr/src/warp-web-app/install/warp-web-app ./warp-web-app
