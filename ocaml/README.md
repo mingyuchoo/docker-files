@@ -1,4 +1,4 @@
-# build Haskell app with Docker
+# build OCaml app with Docker
 
 
 ## How to docker build and run

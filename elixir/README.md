@@ -1,4 +1,4 @@
-# build Rust app with Docker
+# build Elixir app with Docker
 
 
 ## How to docker build and run
