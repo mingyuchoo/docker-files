@@ -33,7 +33,7 @@ Install =Dream= package
   opam exec -- dune exec $(basename ${PWD})
 #+end_src
 ** Check the functionalities
-If you go to [[http://localhost:8080]], You can csee =Good moring, world!=
+If you go to [[http://localhost:4000]], You can csee =Good moring, world!=
 ** Build Docker
 *** How to build Docker image
 #+begin_src shell
@@ -41,9 +41,9 @@ If you go to [[http://localhost:8080]], You can csee =Good moring, world!=
 #+end_src
 *** How to run Docker Container
 #+begin_src shell
-  docker run -p 8080:8080 mingyuchoo/ocaml/dream_web_app:latest
+  docker run -p 4000:4000 mingyuchoo/ocaml/dream_web_app:latest
   # or
-  docker run -d -p 8080:8080 mingyuchoo/ocaml/dream_web_app:latest
+  docker run -d -p 4000:4000 mingyuchoo/ocaml/dream_web_app:latest
 #+end_src
 *** How to debug Docker Image
 #+begin_src shell

@@ -1,6 +1,8 @@
 # First stage: Build stage
 FROM ocaml/opam:ubuntu-24.10-ocaml-5.3 AS builder
 
+ENV HOME=/home/opam
+
 # Set the working directory
 WORKDIR $HOME/dream_web_app
 
@@ -28,20 +30,22 @@ RUN opam exec -- dune build --release
 # Second stage: Run stage
 FROM ubuntu:24.10
 
-# Set the working directory for the final stage
-WORKDIR $HOME/bin
+ENV HOME=/home/opam
 
-# Install dependencies and build the application
-USER opam
+# Set the working directory for the final stage
+WORKDIR /app
+
+# Install necessary runtime dependencies
+RUN apt-get update && \
+    apt-get install -y libev4 libssl3 && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Copy the built application from the builder stage
 COPY --from=builder $HOME/dream_web_app/_build/default/bin/main.exe .
 
-# Set the ownership to the non-root user
-RUN sudo chown -R opam:opam $HOME/bin
-
 # Expose the necessary port (replace <port> with the actual port number)
-EXPOSE 8080
+EXPOSE 4000
 
 # Command to run the application
 CMD ["./main.exe"]
