@@ -38,7 +38,7 @@ app1 :: Request                           -- ^ request
      -> IO ResponseReceived               -- ^ response
 app1 _request respond = do
   putStrLn "app1> Received an HTTP request!"
-  respond <| responseLBS status200 [(hContentType, "text/plain")] "Hello, World!\n"
+  respond <| responseLBS status200 [(hContentType, "text/plain")] "Hello, World from Haskell!\n"
 
 
 -- |

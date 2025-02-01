@@ -27,7 +27,7 @@ $ uv pip install .
 $ uv run -- uvicorn main:app --reload
 ```
 
-## Build Docker
+## Packaging to image
 
 ### How to build Docker image
 
@@ -35,7 +35,7 @@ $ uv run -- uvicorn main:app --reload
 docker build . --tag mingyuchoo/python/fast-web-app:latest
 ```
 
-### How to run Docker Container
+### How to run Docker container
 
 ```
 docker run -p 4000:4000 mingyuchoo/python/fast-web-app:latest

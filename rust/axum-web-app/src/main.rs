@@ -17,7 +17,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("Starting server on port {}", args.port);
 
     let app = Router::new()
-        .route("/", get(|| async { "Hello, World!" }))
+        .route("/", get(|| async { "Hello, World from Axum!" }))
         .route("/echo", post(|body: String| async { body }))
         .route("/hey", get(|| async { "Hey there!" }));
 

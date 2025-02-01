@@ -21,7 +21,7 @@ $ mix iex -S mix phx.server
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
-## Build Docker
+## Packaging to image
 
 ### How to build Docker image
 
@@ -29,7 +29,7 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 docker build . --tag mingyuchoo/elixir/phx-web-app:latest
 ```
 
-### How to run Docker Container
+### How to run Docker container
 
 ```bash
 docker run -e SECRET_KEY_BASE=$(mix phx.gen.secret) -p 4000:4000 mingyuchoo/elixir/phx-web-app:latest

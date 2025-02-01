@@ -17,7 +17,7 @@ cargo test
 cargo build --release
 ./target/release/{project-name}
 ```
-## Build Docker
+## Packaging to image
 
 ### How to build Docker image
 
@@ -25,7 +25,7 @@ cargo build --release
 docker build . --tag mingyuchoo/rust/axum-web-app:latest
 ```
 
-### How to run Docker Container
+### How to run Docker container
 
 ```
 docker run -p 4000:4000 mingyuchoo/rust/axum-web-app:latest

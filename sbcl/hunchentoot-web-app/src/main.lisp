@@ -12,7 +12,7 @@
 ;; Define simple handler
 (define-easy-handler (hello :uri "/") ()
   (setf (hunchentoot:content-type*) "text/plain")
-  "Hello, World!")
+  "Hello, World from Hunchentoot!")
 
 ;; Run web server
 (defvar *my-server* (hunchentoot:start (make-instance 'hunchentoot:easy-acceptor :address "0.0.0.0" :port 4000)))

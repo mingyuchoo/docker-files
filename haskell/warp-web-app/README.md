@@ -21,7 +21,7 @@ cabal build
 cabal run
 ```
 
-## Build Docker
+## Packaging to image
 
 ### How to build Docker image
 
@@ -29,7 +29,7 @@ cabal run
 docker build . --tag mingyuchoo/haskell/warp-web-app:latest
 ```
 
-### How to run Docker Container
+### How to run Docker container
 
 ```
 docker run -p 4000:4000 mingyuchoo/haskell/warp-web-app:latest

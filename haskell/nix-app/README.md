@@ -15,7 +15,7 @@ cabal build
 cabal run
 ```
 
-## Build Docker
+## Packaging to image
 
 ### Build this app
 
@@ -25,7 +25,7 @@ stack exec nix-app.exe
 nix-build default.nix
 ```
 
-### Build Docker image
+### Packaging to image image
 
 ```bash
 cd docker

@@ -28,7 +28,7 @@ $ npm install
 $ node index.js
 ```
 
-## Build Docker
+## Packaging to image
 
 ### How to build Docker image
 
@@ -36,7 +36,7 @@ $ node index.js
 docker build . --tag mingyuchoo/nodejs/express-web-app:latest
 ```
 
-### How to run Docker Container
+### How to run Docker container
 
 ```bash
 docker run -p 4000:4000 mingyuchoo/nodejs/express-web-app:latest
