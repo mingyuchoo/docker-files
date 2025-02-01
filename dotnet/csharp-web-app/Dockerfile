@@ -8,7 +8,7 @@ COPY . .
 RUN dotnet restore
 
 # Build the application
-RUN dotnet publish -c Release -o /release
+RUN dotnet publish -c Release -o /release --no-restore
 
 # Step 2: Create the runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
