@@ -31,3 +31,20 @@ Dockerfile*
 # Misc
 *.swp
 *.lock
+
+# pnpm store
+.pnpm-store/
+
+# TypeScript build output
+dist/
+build/
+
+# Env files
+.env
+.env.local
+.env.production
+
+# Tests & coverage
+coverage/
+**/*.test.ts
+**/*.spec.ts
