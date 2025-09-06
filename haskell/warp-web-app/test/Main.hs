@@ -3,7 +3,7 @@ module Main (main) where
 import MyLib
 import Test.Hspec (hspec, describe, it, shouldBe)
 
--- |
+-- | main
 --
 --
 main :: IO ()

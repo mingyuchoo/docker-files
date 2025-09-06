@@ -18,7 +18,7 @@ import           Network.Wai
     )
 import           Network.Wai.Handler.Warp  (run)
 
--- |
+-- | someFunc
 --
 --
 someFunc :: IO ()
@@ -30,7 +30,7 @@ someFunc = do
     port = 4000
 
 
--- |
+-- | app1
 --
 --
 app1 :: Request                           -- ^ request
@@ -41,7 +41,7 @@ app1 _request respond = do
   respond <| responseLBS status200 [(hContentType, "text/plain")] "Hello, World from Haskell!\n"
 
 
--- |
+-- | app2
 --
 --
 app2 :: Request                           -- ^ request
@@ -52,7 +52,7 @@ app2 _request respond = do
   respond <| responseFile status200 [(hContentType, "text/html")] "index.html" Nothing
 
 
--- |
+-- | app3
 --
 --
 app3 :: Request                           -- ^ request
@@ -65,19 +65,19 @@ app3 request respond = do
     "/raw/" -> plainIndex
     _       -> notFound
 
--- |
+-- | index
 --
 --
 index :: Response
 index = responseFile status200 [(hContentType, "text/html")] "index.html" Nothing
 
--- |
+-- | plainIndex
 --
 --
 plainIndex :: Response
 plainIndex = responseFile status200 [(hContentType, "text/plain")] "index.html" Nothing
 
--- |
+-- | notFound
 --
 --
 notFound :: Response

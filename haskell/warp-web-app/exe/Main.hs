@@ -4,7 +4,7 @@ module Main
 import           MyLib
 import           System.IO (BufferMode (NoBuffering), hSetBuffering, stdout)
 
--- |
+-- | main
 --
 --
 main :: IO ()
