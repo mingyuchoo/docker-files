@@ -1,24 +1,41 @@
-# Step 1: Build the application
-FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
-
+# syntax=docker/dockerfile:1.6
+# 단계 1: 애플리케이션 빌드
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS restore
+ENV DOTNET_CLI_TELEMETRY_OPTOUT=1 \
+    NUGET_XMLDOC_MODE=skip \
+    DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
 WORKDIR /src
 
-# Copy the project files and restore dependencies
+# 프로젝트 파일만 먼저 복사하여 복원 레이어 캐시율을 극대화
+COPY fsharp-web-app.fsproj ./
+RUN --mount=type=cache,target=/root/.nuget/packages \
+    dotnet restore fsharp-web-app.fsproj --nologo
+
+# Build 단계: 소스 전체 복사 후 publish만 수행
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+ENV DOTNET_CLI_TELEMETRY_OPTOUT=1 \
+    NUGET_XMLDOC_MODE=skip \
+    DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
+WORKDIR /src
 COPY . .
-RUN dotnet restore
+RUN --mount=type=cache,target=/root/.nuget/packages \
+    dotnet restore fsharp-web-app.fsproj --nologo
+RUN --mount=type=cache,target=/root/.nuget/packages \
+    dotnet publish fsharp-web-app.fsproj -c Release -o /app \
+    --no-restore --nologo \
+    -p:UseAppHost=false
 
-# Build the application
-RUN dotnet publish -c Release -o /release --no-restore
+# Runtime 단계: 슬림 런타임 이미지 사용
+FROM mcr.microsoft.com/dotnet/aspnet:9.0-alpine AS runtime
+WORKDIR /app
+ENV ASPNETCORE_URLS=http://0.0.0.0:8080 \
+    DOTNET_EnableDiagnostics=0
 
-# Step 2: Create the runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
-WORKDIR /release
+# 빌드 결과만 복사
+COPY --from=build /app .
 
-# Copy the built application from the build image
-COPY --from=build /release .
-
-# Expose the port the release runs on
+# 서비스 포트 공개
 EXPOSE 8080
 
-# Set the entry point for the application
+# 실행 엔트리포인트
 ENTRYPOINT ["dotnet", "fsharp-web-app.dll"]
