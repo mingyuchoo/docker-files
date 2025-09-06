@@ -10,14 +10,14 @@
 
 ### How to build this code
 
-```
+```bash
 cabal clean
 cabal build
 ```
 
 ### How to run this code
 
-```
+```bash
 cabal run
 ```
 
@@ -25,13 +25,13 @@ cabal run
 
 ### How to build Docker image
 
-```
+```bash
 docker build . --tag mingyuchoo/haskell/warp-web-app:latest
 ```
 
 ### How to run Docker container
 
-```
+```bash
 docker run -p 4000:4000 mingyuchoo/haskell/warp-web-app:latest
 # or
 docker run -d -p 4000:4000 mingyuchoo/haskell/warp-web-app:latest
@@ -39,7 +39,7 @@ docker run -d -p 4000:4000 mingyuchoo/haskell/warp-web-app:latest
 
 ### How to test in web browser
 
-```
+```bash
 http://localhost:4000
 ```
 
