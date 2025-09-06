@@ -139,6 +139,10 @@ docker build --tag <your-image:tag> `
 - 4000: `nodejs/express-web-app`, `python/fast-web-app`, `rust/axum-web-app`, `haskell/warp-web-app`, `ocaml/dream_web_app`
 - Elixir Phoenix: 환경설정에 따름(일반적으로 4000)
 
+## 할 일
+
+- 최적화 포인트(멀티스테이지 빌드, 레이어 캐시 최적화, 패키지 복원 분리, 빌드 아티팩트 최소화, 런타임 베이스 이미지 슬림화 등)
+
 ## 라이선스
 
 - 본 리포지토리의 라이선스는 상단 배지의 링크를 참고하세요.
