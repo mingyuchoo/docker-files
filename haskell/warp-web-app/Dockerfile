@@ -1,5 +1,5 @@
 # Stage 1: Build the application
-FROM haskell:9.12.2-slim AS builder
+FROM haskell:9.12.2-slim-bookworm AS builder
 
 ENV CABAL_JOBS=4
 ARG APP_NAME=warp-web-app
@@ -25,8 +25,7 @@ RUN cabal install \
       all
 
 # Stage 2: Create the minimal image
-#FROM haskell:9.12.2-slim
-FROM debian:bookworm-slim
+FROM haskell:9.12.2-slim-bookworm
 
 # Set environment variables
 ENV APP_PORT=4000
