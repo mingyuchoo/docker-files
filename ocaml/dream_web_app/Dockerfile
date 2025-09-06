@@ -1,4 +1,4 @@
-# First stage: Build stage
+# 스테이지 1) Build stage
 FROM ocaml/opam:ubuntu-24.10-ocaml-5.3 AS builder
 
 ENV HOME=/home/opam
@@ -6,48 +6,46 @@ ENV HOME=/home/opam
 # Set the working directory
 WORKDIR $HOME/dream_web_app
 
-# Install necessary system packages
-RUN sudo apt-get update && \
-    sudo apt-get install -y pkg-config libgmp-dev libev-dev libssl-dev && \
-    sudo apt-get clean && \
-    sudo rm -rf /var/lib/apt/lists/*
+# System packages (root 권한으로 최소 설치)
+USER root
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends pkg-config libgmp-dev libev-dev libssl-dev ca-certificates && \
+    rm -rf /var/lib/apt/lists/*
 
-# Copy the application source code to the container
-COPY . .
-
-RUN sudo chown -R opam:opam $HOME/dream_web_app
-
-# Install dependencies and build the application
+# 의존성 캐시 극대화를 위한 메타파일만 우선 복사
 USER opam
+COPY --chown=opam:opam dream_web_app.opam dune-project ./
 
-# Install dependencies and build the application
-#RUN opam update
-RUN opam install -y dune dream
+# Dependencies restore (dune 먼저, 그 다음 프로젝트 deps)
+RUN opam update && \
+    opam install -y dune && \
+    opam install --deps-only --yes .
 
-RUN eval $(opam env)
-
-RUN opam install --deps-only --yes .
+# 나머지 소스 복사 후 빌드
+COPY --chown=opam:opam . .
 RUN opam exec -- dune build --release
 
-# Second stage: Run stage
-FROM ubuntu:24.10
-
-ENV HOME=/home/opam
+# 스테이지 2) Run stage
+FROM debian:stable-slim
 
 # Set the working directory for the final stage
 WORKDIR /app
 
 # Install necessary runtime dependencies
 RUN apt-get update && \
-    apt-get install -y libev4 libssl3 && \
-    apt-get clean && \
+    apt-get install -y --no-install-recommends libev4 libssl3 ca-certificates && \
     rm -rf /var/lib/apt/lists/*
 
+# 비루트 사용자 생성 및 권한 설정
+RUN groupadd -r app && useradd -r -g app app
+
 # Copy the built application from the builder stage
-COPY --from=builder $HOME/dream_web_app/_build/default/bin/main.exe .
+COPY --from=builder /home/opam/dream_web_app/_build/default/bin/main.exe /app/main.exe
+RUN chown app:app /app/main.exe
 
 # Expose the necessary port (replace <port> with the actual port number)
 EXPOSE 4000
 
 # Command to run the application
-CMD ["./main.exe"]
+USER app
+CMD ["/app/main.exe"]
