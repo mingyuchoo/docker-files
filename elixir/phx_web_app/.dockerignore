@@ -31,3 +31,4 @@ Dockerfile*
 # Misc
 *.swp
 *.lock
+!mix.lock
